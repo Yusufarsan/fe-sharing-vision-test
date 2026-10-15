@@ -123,8 +123,10 @@ const submitArticle = async (status) => {
     router.push('/');
   } catch (error) {
     // Menangkap validasi strict dari backend (400 Bad Request)
-    if (error.response && error.response.data && error.response.data.error) {
-      errorMessage.value = error.response.data.error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      errorMessage.value = error.response.data.errors
+        .map(e => `* ${e.message}`)
+        .join('\n');
     } else {
       errorMessage.value = 'An unexpected error occurred. Please try again.';
     }

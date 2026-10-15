@@ -146,8 +146,10 @@ const updateArticle = async (status) => {
     
     router.push('/');
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.error) {
-      errorMessage.value = error.response.data.error;
+    if (error.response && error.response.data && error.response.data.errors) {
+      errorMessage.value = error.response.data.errors
+        .map(e => `* ${e.message}`)
+        .join('\n');
     } else {
       errorMessage.value = 'An unexpected error occurred. Please try again.';
     }
